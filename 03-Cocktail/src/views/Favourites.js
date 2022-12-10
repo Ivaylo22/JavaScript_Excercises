@@ -1,9 +1,7 @@
-import { fireEvent } from "@testing-library/react";
 import React from "react"
 import CocktailCard from "../components/CocktailCard"
 import InfoCard from "../components/InfoCard";
 import { ViewTitle } from "../Styled/Views";
-var _ = require('lodash');
 
 export default function Favourites(props) {
     const [currCocktails, setCurrCocktails] = React.useState([])
