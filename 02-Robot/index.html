@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm a robot</title>
+
+<style>
+    body {
+        background-color: #DFCFBE;
+    }
+    .body {
+        padding: 20px;
+        width: 50%;
+        margin: 0 auto;
+        background-color: white;
+    }
+    .main-content {
+        display: flex;
+        flex-direction: row;
+    }
+    .usage, .result{
+        width: 50%;
+        padding: 0 20px;
+    }
+    .italic {
+        font-style: italic;
+        font-weight: bold;
+    }
+    .bold {
+        font-weight: bold;
+        font-size: 20px;
+    }
+</style>
+
+</head>
+<body>
+    <div class="body">
+        Input: <input type="text" id="command">
+        <input type="button" id="submit" value="Enter">
+        <input type="button" id="clear" value="Clear">
+        
+        <div class="main-content">
+            <div id="result" class="result">
+            </div>
+            <div class="usage">
+                <p class="bold italic">You want to say hello?</p>
+                <p class="command">Type: "Hello", "Хеллоу", "Hi", "драсте", "аз обичам"</p>
+                    <hr>
+                <p class="bold italic">You want to know what time it is?</p>
+                <p class="command">Type: "Колко е часа?", "Час", "Време"</p>
+                    <hr>
+                <p class="bold italic">You want to know what the weather is?</p>
+                <p class="command">Type: "Weather", "прогноза" ,"вали", "градус" ,"ракия" ,"сняг" ,"дъжд"</p>
+                    <hr>
+                <p class="bold italic">            You want to take note?</p>
+                <p class="command">Type: боте, запомни в {list}[ {sublist}..] - note <br> e.g. -- боте, запомни в TODO work - да си поръчам обяд</p>
+                    <hr>
+                <p class="bold italic">You want to remove note?</p>
+                <p class="command">Type: боте, махни {list}[ {sublist}..] - note <br>e.g. -- боте, махни TODO work - да си поръчам обяд</p>
+                    <hr>
+                <p class="bold italic">You want to check your notes?</p>
+                <p class="command">Type: "боте, кво запомни?"  <br></p>
+                <hr>
+            </div>
+        </div>  
+    </div>
+    
+</body>
+
+<script src="robot.js"></script>
+</html>
