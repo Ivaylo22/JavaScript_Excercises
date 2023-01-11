@@ -53,6 +53,17 @@ export default function Home({cocktails, setCocktails}) {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [count, handleScroll])
 
+
+    document.addEventListener("keypress", handleClick)
+
+    function handleClick(e){
+        console.log(e.key)
+        if(e.key === "Enter"){
+            const value = document.getElementById("search-input").value
+            console.log(value)
+        }
+    }
+
     if(!cocktails.drinks){
         return null;
     }

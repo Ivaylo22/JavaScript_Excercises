@@ -10,37 +10,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import {  StyledButton, StyledNavbar, StyledStack } from "../Styled/Navbar";
 
-export default function RootLayout({cocktails, setCocktails}) {
+export default function RootLayout({cocktails}) {
     let location = useLocation();
-
-    // function handleClick(e) {
-    //     const input = document.getElementById("search-input");
-    //     let isContained = false;
-
-
-    //     if(location.pathname === "/favourites") {
-    //         cocktails.drinks.filter(drink => drink.isFavourite).map(drink => {
-    //             if(drink.strDrink === input.value){
-    //                 isContained = true;
-    //             }
-    //             return isContained
-    //         })
-    //     }
-    //     else {
-    //         cocktails.drinks.map(drink => {
-    //             if(drink.strDrink === input.value){
-    //                 isContained = true;
-    //             }
-    //             return isContained
-    //         })
-    //     }
-    //     if(e.key === "Enter" && isContained) {
-    //         const cocktail = cocktails.drinks.filter(drink => drink.strDrink === input.value)
-    //         console.log(cocktail)
-            
-    //     }
-       
-    // }
 
     return (
         <div className="root-layout">
