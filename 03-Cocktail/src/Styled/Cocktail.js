@@ -10,6 +10,7 @@ export const CocktailWrapper = styled.div`
     flex-wrap: wrap;
     border-radius: 20px;
     padding-right: 10px;
+    padding-bottom: 10px;
 `
 
 export const CocktailInfo = styled.div`

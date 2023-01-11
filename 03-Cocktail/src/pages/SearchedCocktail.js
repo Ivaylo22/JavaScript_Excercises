@@ -1,6 +1,8 @@
 import React from "react"
+
 import CocktailCard from "../components/CocktailCard"
 import InfoCard from "../components/InfoCard";
+
 import { ViewTitle } from "../Styled/Views";
 
 export default function SearchedCocktail(props) {
