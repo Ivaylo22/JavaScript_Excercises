@@ -1,7 +1,9 @@
-import { ViewTitle } from "../Styled/Views";
+import { ViewTitle, ViewWrappper } from "../Styled/Views";
 
 export default function Home(){
     return (
-        <ViewTitle>Home Page</ViewTitle>
+        <ViewWrappper>
+            <ViewTitle>Welcome to Cocktails catalogue</ViewTitle>
+        </ViewWrappper>
     )
 }

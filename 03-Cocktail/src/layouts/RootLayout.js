@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,6 +16,7 @@ import { CocktailWrapper } from "../Styled/Cocktail";
 export default function RootLayout({cocktails, setCocktails}) {
     const allCocktails = JSON.parse(sessionStorage.getItem("cocktails"));
     const [searchedCocktail, setSearchedCocktail] = useState({});
+    const navigate = useNavigate();
     
     document.addEventListener("keyup", handleClick)
 
@@ -33,7 +34,7 @@ export default function RootLayout({cocktails, setCocktails}) {
 
             if(searched){
                 setSearchedCocktail(searched)
-                return <Navigate to="/dashboard" replace={true} />
+                navigate('/cocktails')
             }
         }
     }
@@ -98,6 +99,7 @@ export default function RootLayout({cocktails, setCocktails}) {
                             <CocktailCard
                                 img={searchedCocktail.strDrinkThumb}
                                 title={searchedCocktail.strDrink}
+                                isFavourite={searchedCocktail.isFavourite}
                                 handleFavourite={() => toggleFavourite(searchedCocktail.idDrink)}
                             />
                             <StyledShowMore variant="contained"><StyledLink reloadDocument={true} to={searchedCocktail.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
