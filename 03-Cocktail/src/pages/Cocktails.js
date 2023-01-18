@@ -1,16 +1,18 @@
-import React, { useCallback } from "react";
+import React, { useCallback} from "react";
 
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import {  StyledShowMore, StyledLink } from "../Styled/Navbar";
+
+import { toggleFavourite } from "../Helpers";
+import { fetchAllCocktails } from "../Helpers";
 
 export default function Home({cocktails, setCocktails}) { 
     const [count, setCount] = React.useState(20)
 
     React.useEffect(() => {
         const fetchData = async () => {
-            const result = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`);
-            const data = await result.json();
+            const data = await fetchAllCocktails();
        
             setCocktails(data);
             data.drinks.map(drink => drink.isFavourite = false)
@@ -25,22 +27,6 @@ export default function Home({cocktails, setCocktails}) {
           }   
     }, [setCocktails])
 
-    function toggleFavourite(id){
-        let changedCocktails = {
-            drinks: []
-        };
-
-        cocktails.drinks.map(cocktail => {
-            if(cocktail.idDrink === id) {
-                cocktail.isFavourite = !cocktail.isFavourite;
-            }
-            changedCocktails.drinks.push(cocktail);
-            return changedCocktails;
-        })
-        setCocktails(changedCocktails)
-        sessionStorage.setItem("cocktails", JSON.stringify(changedCocktails))
-    }
-
     const handleScroll = useCallback(() => {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             window.removeEventListener("scroll", handleScroll)
@@ -53,16 +39,7 @@ export default function Home({cocktails, setCocktails}) {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [count, handleScroll])
 
-
-    document.addEventListener("keypress", handleClick)
-
-    function handleClick(e){
-        console.log(e.key)
-        if(e.key === "Enter"){
-            const value = document.getElementById("search-input").value
-            console.log(value)
-        }
-    }
+    
 
     if(!cocktails.drinks){
         return null;
@@ -76,7 +53,7 @@ export default function Home({cocktails, setCocktails}) {
                         title={drink.strDrink}
                         id={drink.idDrink}
                         isFavourite={drink.isFavourite}
-                        handleFavourite={() => toggleFavourite(drink.idDrink)}
+                        handleFavourite={() => toggleFavourite(drink.idDrink, cocktails, setCocktails)}
                     />
                     <StyledShowMore variant="contained"><StyledLink to={drink.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
 

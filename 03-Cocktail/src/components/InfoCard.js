@@ -1,10 +1,12 @@
 import React from "react"
+
+import { useLoaderData } from "react-router-dom";
+
 import { CocktailExtraInfo, 
     CocktailHeader, 
     CocktailImg, 
     CocktailInfo, 
     CocktailInstructions, 
-    CocktailIsChangedWrapper, 
     CocktailTitle, 
     CocktailWrapper, 
     ComponentsWrapper, 
@@ -12,12 +14,48 @@ import { CocktailExtraInfo,
     FullCocktailCard, 
     Ingredients } from "../Styled/Cocktail";
 
-import { useLoaderData } from "react-router-dom";
 
-export default function InfoCard() {
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import StarIcon from '@mui/icons-material/Star';
+import { fetchCocktailById } from "../Helpers";
+
+// data loader
+export const cocktailDetailsLoader = async ({ params }) => {
+    const { id } = params
+    const res = await fetchCocktailById(id)
+
+    return res.json()
+}
+
+export default function InfoCard({setCocktails}) {
     const data = useLoaderData()
 
     let cocktail = data.drinks[0];
+    const allCocktails = JSON.parse(sessionStorage.getItem("cocktails"));
+    const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === cocktail.idDrink)
+    
+    if(!actualCocktail || !actualCocktail.isFavourite){
+        cocktail.isFavourite = false
+    }
+    else {
+        cocktail.isFavourite = true
+    }
+
+    function toggleFavourite(id){
+        let changedCocktails = {
+            drinks: []
+        };
+
+        allCocktails.drinks.map(cocktail => {
+            if(cocktail.idDrink === id) {
+                cocktail.isFavourite = !cocktail.isFavourite;
+            }
+            changedCocktails.drinks.push(cocktail);
+            return changedCocktails;
+        })
+        setCocktails(changedCocktails)
+        sessionStorage.setItem("cocktails", JSON.stringify(changedCocktails))
+    }
 
     return (     
         <FullCocktailCard>
@@ -26,6 +64,13 @@ export default function InfoCard() {
                 <CocktailInfo>
                     <CocktailHeader>
                         <CocktailTitle> {cocktail.strDrink} </CocktailTitle>
+                        {
+                            cocktail.isFavourite === undefined ?
+                                null :
+                                cocktail.isFavourite === false ?
+                                    <StarBorderOutlinedIcon onClick={()=>toggleFavourite(cocktail.idDrink)} /> :
+                                    <StarIcon onClick={()=>toggleFavourite(cocktail.idDrink)} />
+                        }
                     </CocktailHeader>
                     <CocktailInstructions>{cocktail.strInstructions}</CocktailInstructions>
                 </CocktailInfo>
@@ -61,14 +106,6 @@ export default function InfoCard() {
                     </div>
 
                 </ComponentsWrapper>
-                
-                <CocktailIsChangedWrapper>
-                    {
-                        cocktail.isChanged !== true ?
-                            <h6>There are no changes</h6> :
-                            <h6>There are changes</h6>
-                    }
-                </CocktailIsChangedWrapper>
 
             </CocktailExtraInfo>
 
@@ -77,10 +114,3 @@ export default function InfoCard() {
     )
 }
 
-// data loader
-export const cocktailDetailsLoader = async ({ params }) => {
-    const { id } = params 
-    const res = await fetch('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + id)
-    
-    return res.json()
-  }

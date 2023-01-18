@@ -48,12 +48,6 @@ export const CocktailImg = styled.img`
     align-self: center;
 `
 
-export const CocktailIsChangedWrapper = styled.div`
-    margin: 0 auto;
-    font-size: 18px;
-    text-align: right;
-`
-
 export const FullCocktailCard = styled.div`
  display: flex;
     justify-content: space-between;

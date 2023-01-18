@@ -5,8 +5,3 @@ export const ContentWrapper = styled.div`
     margin: 0 auto;
     max-width: 900px;
 `
-
-export const MainContent = styled.div`
-    padding: 20px;
-    color: #ffffff;
-`
