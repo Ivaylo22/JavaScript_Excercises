@@ -1,6 +1,6 @@
 import React from "react"
 
-import { useLoaderData, useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 import { toggleFavourite } from "../Helpers";
 
@@ -31,18 +31,12 @@ export const cocktailDetailsLoader = async ({ params }) => {
 
 export default function InfoCard({ setCocktails}) {
     const data = useLoaderData()
-    const location = useLocation();
     let cocktail = data.drinks[0];
 
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
     const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === cocktail.idDrink)
 
-    if(location.pathname.includes("random")) {
-        if(actualCocktail){
-            actualCocktail.isFavourite = undefined;
-        }
-    }
-    else if(!actualCocktail || !actualCocktail.isFavourite){
+    if(!actualCocktail || !actualCocktail.isFavourite){
         cocktail.lastUpdate = actualCocktail.lastUpdate
         cocktail.isFavourite = false
     }
