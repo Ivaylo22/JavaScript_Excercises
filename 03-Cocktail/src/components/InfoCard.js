@@ -1,6 +1,8 @@
 import React from "react"
 
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useLocation } from "react-router-dom";
+
+import { toggleFavourite } from "../Helpers";
 
 import { CocktailExtraInfo, 
     CocktailHeader, 
@@ -27,34 +29,25 @@ export const cocktailDetailsLoader = async ({ params }) => {
     return res.json()
 }
 
-export default function InfoCard({setCocktails}) {
+export default function InfoCard({ setCocktails}) {
     const data = useLoaderData()
+    const location = useLocation();
 
     let cocktail = data.drinks[0];
+
     const allCocktails = JSON.parse(sessionStorage.getItem("cocktails"));
     const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === cocktail.idDrink)
-    
-    if(!actualCocktail || !actualCocktail.isFavourite){
+
+    if(location.pathname.includes("random")) {
+        if(actualCocktail){
+            actualCocktail.isFavourite = undefined;
+        }
+    }
+    else if(!actualCocktail || !actualCocktail.isFavourite){
         cocktail.isFavourite = false
     }
     else {
         cocktail.isFavourite = true
-    }
-
-    function toggleFavourite(id){
-        let changedCocktails = {
-            drinks: []
-        };
-
-        allCocktails.drinks.map(cocktail => {
-            if(cocktail.idDrink === id) {
-                cocktail.isFavourite = !cocktail.isFavourite;
-            }
-            changedCocktails.drinks.push(cocktail);
-            return changedCocktails;
-        })
-        setCocktails(changedCocktails)
-        sessionStorage.setItem("cocktails", JSON.stringify(changedCocktails))
     }
 
     return (     
@@ -68,8 +61,8 @@ export default function InfoCard({setCocktails}) {
                             cocktail.isFavourite === undefined ?
                                 null :
                                 cocktail.isFavourite === false ?
-                                    <StarBorderOutlinedIcon onClick={()=>toggleFavourite(cocktail.idDrink)} /> :
-                                    <StarIcon onClick={()=>toggleFavourite(cocktail.idDrink)} />
+                                    <StarBorderOutlinedIcon onClick={()=>toggleFavourite(cocktail.idDrink, allCocktails, setCocktails)} /> :
+                                    <StarIcon onClick={()=>toggleFavourite(cocktail.idDrink, allCocktails, setCocktails)} />
                         }
                     </CocktailHeader>
                     <CocktailInstructions>{cocktail.strInstructions}</CocktailInstructions>

@@ -27,10 +27,17 @@ function App() {
           <Route path="/" element={<RootLayout
             cocktails={cocktails}
             setCocktails={setCocktails}
+            exact
           />}>
+            <Route
+              path=":id"
+              element={<InfoCard
+                cocktails={cocktails}
+                setCocktails={setCocktails} />}
+              loader={cocktailDetailsLoader}
+            />
             <Route index element={<Home />} />
             <Route path="cocktails" element={ <CocktailsLayout />}>
-
               <Route
                 index
                 element={<Cocktails
@@ -40,6 +47,7 @@ function App() {
               <Route
                 path=":id"
                 element={<InfoCard
+                  cocktails={cocktails}
                   setCocktails={setCocktails}
                 />}
                 loader={cocktailDetailsLoader}
@@ -56,6 +64,7 @@ function App() {
               <Route
                 path=":id"
                 element={<InfoCard 
+                  cocktails={cocktails}
                   setCocktails={setCocktails}/>}
                 loader={cocktailDetailsLoader}
               />
@@ -66,10 +75,17 @@ function App() {
                 index
                 element={<RandomCocktail 
                   cocktails={cocktails}
+                  setCocktails={setCocktails}/>}           
+              />
+              <Route
+                path=":id"
+                element={<InfoCard 
+                  cocktails={cocktails}
                   setCocktails={setCocktails}/>}
-                  
+                loader={cocktailDetailsLoader}
               />
             </Route>
+
             <Route path="*" element={<NotFound />} />
           </Route>
         )

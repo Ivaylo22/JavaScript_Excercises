@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -9,12 +9,11 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 
-import {  StyledButton, StyledNavbar, StyledStack} from "../Styled/Navbar";
+import {  StyledButton, StyledNavbar, StyledStack, StyledShowMore, StyledLink} from "../Styled/Navbar";
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
 
 export default function RootLayout({cocktails, setCocktails}) {
-    const location = useLocation();
     const allCocktails = JSON.parse(sessionStorage.getItem("cocktails"));
     const [searchedCocktail, setSearchedCocktail] = useState({});
     
@@ -27,7 +26,6 @@ export default function RootLayout({cocktails, setCocktails}) {
         if(input){
             value = input.value;    
         }
-        e.preventDefault();
         if (e.key === "Enter") {          
             setSearchedCocktail({});            
             if(!allCocktails ) return null;
@@ -35,6 +33,7 @@ export default function RootLayout({cocktails, setCocktails}) {
 
             if(searched){
                 setSearchedCocktail(searched)
+                return <Navigate to="/dashboard" replace={true} />
             }
         }
     }
@@ -44,7 +43,7 @@ export default function RootLayout({cocktails, setCocktails}) {
             drinks: []
         };
 
-        cocktails.drinks.map(cocktail => {
+        allCocktails.drinks.map(cocktail => {
             if(cocktail.idDrink === id) {
                 cocktail.isFavourite = !cocktail.isFavourite;
             }
@@ -73,7 +72,7 @@ export default function RootLayout({cocktails, setCocktails}) {
                                     <StyledNavbar onClick={changePage} to="favourites" ><StyledButton variant="contained">Favourites</StyledButton></StyledNavbar>
                                     <StyledNavbar onClick={changePage} to="random"  reloadDocument={true}><StyledButton variant="contained">Random</StyledButton></StyledNavbar>
                                     {
-                                        !allCocktails || location.pathname.includes("random") ? null :
+                                        !allCocktails ? null :
                                             <Stack spacing={3} sx={{ width: 160, height: 40 }}>
                                                 <Autocomplete
                                                     id="search-input"
@@ -94,13 +93,14 @@ export default function RootLayout({cocktails, setCocktails}) {
             <main>
                 {
                     JSON.stringify(searchedCocktail) !== '{}' ?
+                        
                         <CocktailWrapper>
                             <CocktailCard
                                 img={searchedCocktail.strDrinkThumb}
                                 title={searchedCocktail.strDrink}
-                                isFavourite={searchedCocktail.isFavourite}
                                 handleFavourite={() => toggleFavourite(searchedCocktail.idDrink)}
                             />
+                            <StyledShowMore variant="contained"><StyledLink reloadDocument={true} to={searchedCocktail.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
                         </CocktailWrapper> :
                         <Outlet />
                 }

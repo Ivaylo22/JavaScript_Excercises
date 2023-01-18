@@ -1,4 +1,4 @@
-import React, { useCallback} from "react";
+import React, { useCallback, useEffect, useState} from "react";
 
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
@@ -8,9 +8,9 @@ import { toggleFavourite } from "../Helpers";
 import { fetchAllCocktails } from "../Helpers";
 
 export default function Home({cocktails, setCocktails}) { 
-    const [count, setCount] = React.useState(20)
+    const [count, setCount] = useState(20)
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             const data = await fetchAllCocktails();
        
@@ -34,7 +34,7 @@ export default function Home({cocktails, setCocktails}) {
         }
     }, [])
     
-    React.useEffect(() => {
+    useEffect(() => {
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [count, handleScroll])
