@@ -35,7 +35,7 @@ export default function InfoCard({ setCocktails}) {
 
     let cocktail = data.drinks[0];
 
-    const allCocktails = JSON.parse(sessionStorage.getItem("cocktails"));
+    const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
     const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === cocktail.idDrink)
 
     if(location.pathname.includes("random")) {

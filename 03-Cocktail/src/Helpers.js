@@ -11,7 +11,7 @@ export function toggleFavourite(id, cocktails, setCocktails){
         return changedCocktails;
     })
     setCocktails(changedCocktails)
-    sessionStorage.setItem("cocktails", JSON.stringify(changedCocktails))
+    localStorage.setItem("cocktails", JSON.stringify(changedCocktails))
 }
 
 export async function fetchAllCocktails() {

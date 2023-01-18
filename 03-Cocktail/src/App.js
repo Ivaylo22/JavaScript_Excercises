@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 
@@ -20,7 +20,7 @@ import RootLayout from "./layouts/RootLayout";
 import CocktailsLayout from "./layouts/CocktailsLayout";
 
 function App() {
-    const [cocktails, setCocktails] = React.useState([]);
+    const [cocktails, setCocktails] = useState([]);
     
     const router = createBrowserRouter(
         createRoutesFromElements(

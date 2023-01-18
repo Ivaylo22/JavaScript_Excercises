@@ -16,14 +16,14 @@ export default function Home({cocktails, setCocktails}) {
        
             setCocktails(data);
             data.drinks.map(drink => drink.isFavourite = false)
-            sessionStorage.setItem("cocktails", JSON.stringify(data))
+            localStorage.setItem("cocktails", JSON.stringify(data))
           };
 
-          if(!JSON.parse(sessionStorage.getItem("cocktails"))){
+          if(!JSON.parse(localStorage.getItem("cocktails"))){
                 fetchData();
           }
           else {
-                setCocktails(JSON.parse(sessionStorage.getItem("cocktails")))
+                setCocktails(JSON.parse(localStorage.getItem("cocktails")))
           }   
     }, [setCocktails])
 

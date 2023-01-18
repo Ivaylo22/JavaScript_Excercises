@@ -14,7 +14,7 @@ import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
 
 export default function RootLayout({cocktails, setCocktails}) {
-    const allCocktails = JSON.parse(sessionStorage.getItem("cocktails"));
+    const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
     const [searchedCocktail, setSearchedCocktail] = useState({});
     const navigate = useNavigate();
     
@@ -51,7 +51,7 @@ export default function RootLayout({cocktails, setCocktails}) {
             changedCocktails.drinks.push(cocktail);
             return changedCocktails;
         })
-        sessionStorage.setItem("cocktails", JSON.stringify(changedCocktails))
+        localStorage.setItem("cocktails", JSON.stringify(changedCocktails))
         setCocktails(changedCocktails)
         searchedCocktail.isFavourite = !searchedCocktail.isFavourite;
     }

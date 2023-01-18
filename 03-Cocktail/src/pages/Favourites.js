@@ -12,7 +12,7 @@ export default function Favourites({cocktails, setCocktails}) {
 
 
     useEffect(() => {
-        const data = JSON.parse(sessionStorage.getItem("cocktails"))
+        const data = JSON.parse(localStorage.getItem("cocktails"))
         setCocktails(data)
     }, [setCocktails])
 
