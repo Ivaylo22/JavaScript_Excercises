@@ -9,13 +9,24 @@ import { fetchAllCocktails } from "../Helpers";
 
 export default function Home({cocktails, setCocktails}) { 
     const [count, setCount] = useState(20)
+    var d = new Date();
+    let dformat = [d.getMonth()+1,
+               d.getDate(),
+               d.getFullYear()].join('/')+' '+
+              [d.getHours(),
+               d.getMinutes(),
+               d.getSeconds()].join(':');
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchAllCocktails();
        
             setCocktails(data);
-            data.drinks.map(drink => drink.isFavourite = false)
+            data.drinks.map(drink => {
+                drink.isFavourite = false
+                drink.lastUpdate = dformat
+                return drink
+            })
             localStorage.setItem("cocktails", JSON.stringify(data))
           };
 
@@ -25,7 +36,7 @@ export default function Home({cocktails, setCocktails}) {
           else {
                 setCocktails(JSON.parse(localStorage.getItem("cocktails")))
           }   
-    }, [setCocktails])
+    }, [setCocktails, dformat])
 
     const handleScroll = useCallback(() => {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {

@@ -27,7 +27,6 @@ function App() {
           <Route path="/" element={<RootLayout
             cocktails={cocktails}
             setCocktails={setCocktails}
-            exact
           />}>
             <Route
               path=":id"

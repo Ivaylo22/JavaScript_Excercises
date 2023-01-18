@@ -32,7 +32,6 @@ export const cocktailDetailsLoader = async ({ params }) => {
 export default function InfoCard({ setCocktails}) {
     const data = useLoaderData()
     const location = useLocation();
-
     let cocktail = data.drinks[0];
 
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
@@ -44,9 +43,11 @@ export default function InfoCard({ setCocktails}) {
         }
     }
     else if(!actualCocktail || !actualCocktail.isFavourite){
+        cocktail.lastUpdate = actualCocktail.lastUpdate
         cocktail.isFavourite = false
     }
     else {
+        cocktail.lastUpdate = actualCocktail.lastUpdate
         cocktail.isFavourite = true
     }
 
@@ -97,11 +98,10 @@ export default function InfoCard({ setCocktails}) {
                         <p>{cocktail.strMeasure7}</p>
                         <p>{cocktail.strMeasure8}</p>
                     </div>
-
                 </ComponentsWrapper>
 
+            {cocktail.lastUpdate > cocktail.dateModified ? <h4>there are changes</h4> : <h4>there are no changes</h4>}
             </CocktailExtraInfo>
-
         </FullCocktailCard>
 
     )
