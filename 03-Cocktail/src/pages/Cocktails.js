@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
@@ -8,9 +8,11 @@ import { toggleFavourite } from "../Helpers";
 import { fetchAllCocktails } from "../Helpers";
 
 import { dformat } from "../Helpers";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home({cocktails, setCocktails}) { 
-    const [count, setCount] = useState(20)
+    const [count, setCount] = useState(20);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,18 +34,15 @@ export default function Home({cocktails, setCocktails}) {
           }   
     }, [setCocktails])
 
-    const handleScroll = useCallback(() => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            window.removeEventListener("scroll", handleScroll)
-            setCount(prev => prev + 20)
-        }
-    }, [])
-    
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [count, handleScroll])
+    function fetchMore() {
+        setTimeout(() => {
+            setCount(prevCount => prevCount + 20)
+          }, 1500);
 
+        if(count > cocktails.drinks.length){
+            setHasMore(false)
+        }
+    }
     
 
     if(!cocktails.drinks){
@@ -51,7 +50,14 @@ export default function Home({cocktails, setCocktails}) {
     }
     return (
         <div>
-            {cocktails.drinks.slice(0, count).map(drink => (
+            <InfiniteScroll
+                dataLength = {count}
+                next = {fetchMore}
+                scrollThreshold = {1}
+                hasMore={hasMore}
+                loader = {<h4>Loading...</h4>}
+            >
+                {cocktails.drinks.slice(0, count).map(drink => (
                 <CocktailWrapper key={drink.idDrink}>
                     <CocktailCard
                         img={drink.strDrinkThumb}
@@ -65,6 +71,9 @@ export default function Home({cocktails, setCocktails}) {
                 </CocktailWrapper>
 
             ))}
+                
+
+            </InfiniteScroll>
         </div>
     )
 }

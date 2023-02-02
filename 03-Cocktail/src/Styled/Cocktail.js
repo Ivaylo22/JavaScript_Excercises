@@ -4,7 +4,7 @@ export const CocktailWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: #004ba0;
-    width: 750px;
+    width: 780px;
     margin: 20px auto;
     align-self: center;
     flex-wrap: wrap;
