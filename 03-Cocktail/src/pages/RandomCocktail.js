@@ -40,19 +40,25 @@ export default function RandomCocktail({cocktails, setCocktails}){
         }
         fetchRandom()
     }, [])
-    
-    if(!isObjEmpty(randomCocktail)){
-        const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === randomCocktail.idDrink)
 
-        if(actualCocktail){
-            randomCocktail.isFavourite = actualCocktail.isFavourite
+    useEffect(() => {
+        if(!isObjEmpty(randomCocktail)){
+            const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === randomCocktail.idDrink)
+            let temporaryCocktail = randomCocktail
+    
+            if(actualCocktail){
+                temporaryCocktail.isFavourite = actualCocktail.isFavourite
+            }
+            else {
+                temporaryCocktail.isFavourite = false;
+                allCocktails.drinks.push(temporaryCocktail)
+                localStorage.setItem("cocktails", JSON.stringify(allCocktails))
+            }
+    
+            setRandomCocktail(temporaryCocktail)
         }
-        else {
-            randomCocktail.isFavourite = false;
-            allCocktails.drinks.push(randomCocktail)
-            localStorage.setItem("cocktails", JSON.stringify(allCocktails))
-        }
-    }
+    }, [randomCocktail, allCocktails])
+    
 
     if(!randomCocktail.idDrink){
         return null;
