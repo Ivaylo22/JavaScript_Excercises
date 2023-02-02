@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 
 import CocktailCard from "../components/CocktailCard"
 import { CocktailWrapper } from "../Styled/Cocktail"
@@ -9,12 +9,6 @@ import { toggleFavourite } from "../Helpers";
 
 
 export default function Favourites({cocktails, setCocktails}) {
-
-
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("cocktails"))
-        setCocktails(data)
-    }, [setCocktails])
 
     if(!cocktails.drinks) {
         return null

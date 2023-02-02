@@ -30,7 +30,9 @@ function App() {
             cocktails={cocktails}
             setCocktails={setCocktails}
           />}>
-            <Route index element={<Home />} />
+            <Route index element={<Home 
+              setCocktails={setCocktails}
+            />} />
 
             <Route path="cocktails" element={ <CocktailsLayout />} errorElement={<CocktailError/>}>
               <Route
