@@ -12,7 +12,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import {  StyledButton, StyledNavbar, StyledStack, StyledShowMore, StyledLink} from "../Styled/Navbar";
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
-import { isObjEmpty } from "../Helpers";
 
 export default function RootLayout({cocktails, setCocktails}) {
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
@@ -94,7 +93,8 @@ export default function RootLayout({cocktails, setCocktails}) {
             </header>
             <main>
                 {
-                    !isObjEmpty(searchedCocktail) ?             
+                    JSON.stringify(searchedCocktail) !== '{}' ?
+                        
                         <CocktailWrapper>
                             <CocktailCard
                                 img={searchedCocktail.strDrinkThumb}
