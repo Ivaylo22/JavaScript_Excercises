@@ -1,17 +1,36 @@
 import React, { useEffect, useState } from "react";
 
 import CocktailCard from "../components/CocktailCard";
-import { fetchRandomCocktail } from "../Helpers";
+import { fetchAllCocktails, fetchRandomCocktail } from "../Helpers";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import { StyledShowMore, StyledLink } from "../Styled/Navbar";
 
 import { toggleFavourite } from "../Helpers";
 
+import { dformat } from "../Helpers";
+
 //cant add a star to toggle favourite because the random cocktail might not be inside all cocktails array
 
 export default function RandomCocktail({cocktails, setCocktails}){
     const [randomCocktail, setRandomCocktail] = useState({})
+
+    if(!JSON.parse(localStorage.getItem("cocktails"))){
+        const fetchData = async () => {
+            const data = await fetchAllCocktails();
+       
+            setCocktails(data);
+            data.drinks.map(drink => {
+                drink.isFavourite = false
+                drink.lastUpdate = dformat
+                return drink
+            })
+            localStorage.setItem("cocktails", JSON.stringify(data))
+          };
+
+          fetchData();
+    }
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"))
+
 
     useEffect(() => {
         async function fetchRandom() {

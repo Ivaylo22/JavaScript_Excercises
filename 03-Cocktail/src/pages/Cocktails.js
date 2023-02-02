@@ -7,20 +7,14 @@ import {  StyledShowMore, StyledLink } from "../Styled/Navbar";
 import { toggleFavourite } from "../Helpers";
 import { fetchAllCocktails } from "../Helpers";
 
+import { dformat } from "../Helpers";
+
 export default function Home({cocktails, setCocktails}) { 
     const [count, setCount] = useState(20)
-    var d = new Date();
-    let dformat = [d.getMonth()+1,
-               d.getDate(),
-               d.getFullYear()].join('/')+' '+
-              [d.getHours(),
-               d.getMinutes(),
-               d.getSeconds()].join(':');
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchAllCocktails();
-       
             setCocktails(data);
             data.drinks.map(drink => {
                 drink.isFavourite = false
@@ -36,7 +30,7 @@ export default function Home({cocktails, setCocktails}) {
           else {
                 setCocktails(JSON.parse(localStorage.getItem("cocktails")))
           }   
-    }, [setCocktails, dformat])
+    }, [setCocktails])
 
     const handleScroll = useCallback(() => {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
