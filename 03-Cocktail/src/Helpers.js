@@ -42,6 +42,10 @@ export async function fetchRandomCocktail() {
     return data
 }
 
+export function getItemsFromLocalStorage (param) {
+    return JSON.parse(localStorage.getItem(param))
+}
+
 export function isObjEmpty (obj) {
     return Object.keys(obj).length === 0;
 }

@@ -12,6 +12,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import {  StyledButton, StyledNavbar, StyledStack, StyledShowMore, StyledLink} from "../Styled/Navbar";
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
+import { isObjEmpty } from "../Helpers";
 
 export default function RootLayout({cocktails, setCocktails}) {
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
@@ -93,8 +94,7 @@ export default function RootLayout({cocktails, setCocktails}) {
             </header>
             <main>
                 {
-                    JSON.stringify(searchedCocktail) !== '{}' ?
-                        
+                    !isObjEmpty(searchedCocktail) ?             
                         <CocktailWrapper>
                             <CocktailCard
                                 img={searchedCocktail.strDrinkThumb}
@@ -102,7 +102,7 @@ export default function RootLayout({cocktails, setCocktails}) {
                                 isFavourite={searchedCocktail.isFavourite}
                                 handleFavourite={() => toggleFavourite(searchedCocktail.idDrink)}
                             />
-                            <StyledShowMore variant="contained"><StyledLink reloadDocument={true} to={searchedCocktail.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
+                            <StyledShowMore variant="contained"><StyledLink reloadDocument={true} to={`cocktails/${searchedCocktail.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
                         </CocktailWrapper> :
                         <Outlet />
                 }

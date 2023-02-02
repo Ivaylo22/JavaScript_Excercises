@@ -25,6 +25,11 @@ import { fetchCocktailById } from "../Helpers";
 export const cocktailDetailsLoader = async ({ params }) => {
     const { id } = params
     const res = await fetchCocktailById(id)
+    const allCocktails = JSON.parse(localStorage.getItem("cocktails"))
+
+    if(!allCocktails.drinks.find(drink => drink.idDrink === id)){
+        throw Error("Could not found that cocktail")
+    }
 
     return res.json()
 }
