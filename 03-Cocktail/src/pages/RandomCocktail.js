@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import CocktailCard from "../components/CocktailCard";
-import { fetchAllCocktails, fetchRandomCocktail } from "../Helpers";
+import { fetchAllCocktails, fetchRandomCocktail, isObjEmpty } from "../Helpers";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import { StyledShowMore, StyledLink } from "../Styled/Navbar";
 
@@ -40,8 +40,8 @@ export default function RandomCocktail({cocktails, setCocktails}){
         }
         fetchRandom()
     }, [])
-
-    if(JSON.stringify(randomCocktail) !== "{}"){
+    
+    if(!isObjEmpty(randomCocktail)){
         const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === randomCocktail.idDrink)
 
         if(actualCocktail){
