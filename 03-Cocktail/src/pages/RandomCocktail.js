@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import CocktailCard from "../components/CocktailCard";
-import { fetchAllCocktails, fetchRandomCocktail, getTodayTimestamp, isObjEmpty } from "../Helpers";
+import { fetchAllCocktails, fetchRandomCocktail, isObjEmpty, setDefaultFavAndUpdate } from "../Helpers";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import { StyledShowMore, StyledLink } from "../Styled/Navbar";
 
@@ -10,17 +10,13 @@ import { toggleFavourite } from "../Helpers";
 export default function RandomCocktail({cocktails, setCocktails}){
     const [randomCocktail, setRandomCocktail] = useState({})
 
-    const todayTime = getTodayTimestamp()
-
     if(!JSON.parse(localStorage.getItem("cocktails"))){
         const fetchData = async () => {
             const data = await fetchAllCocktails();
        
             setCocktails(data);
             data.drinks.map(drink => {
-                drink.isFavourite = false
-                drink.lastUpdate = todayTime
-                return drink
+                return setDefaultFavAndUpdate(drink)
             })
             localStorage.setItem("cocktails", JSON.stringify(data))
           };

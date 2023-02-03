@@ -47,7 +47,8 @@ function App() {
               cocktails={cocktails}
               setCocktails={setCocktails} />}
           />
-          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })}
+
+          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })} 
         </Route>
 
         <Route path="favourites" element={<CocktailsLayout />} errorElement={<CocktailError />}>

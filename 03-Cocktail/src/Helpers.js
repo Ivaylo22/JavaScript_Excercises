@@ -46,3 +46,12 @@ export function getTodayTimestamp() {
     let d = new Date()
     return d.getTime();
 }
+
+export function setDefaultFavAndUpdate(drink) {
+    const todayTime = getTodayTimestamp()
+
+    drink.isFavourite = false
+    drink.lastUpdate = todayTime
+
+    return drink;
+}
