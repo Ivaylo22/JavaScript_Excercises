@@ -1,11 +1,3 @@
-var d = new Date();
-export let dformat = [d.getMonth()+1,
-           d.getDate(),
-           d.getFullYear()].join('/')+' '+
-          [d.getHours(),
-           d.getMinutes(),
-           d.getSeconds()].join(':');
-
 export function toggleFavourite(id, cocktails, setCocktails){
     let changedCocktails = {
         drinks: []
@@ -48,4 +40,9 @@ export function getItemsFromLocalStorage (param) {
 
 export function isObjEmpty (obj) {
     return Object.keys(obj).length === 0;
+}
+
+export function getTodayTimestamp() {
+    let d = new Date()
+    return d.getTime();
 }

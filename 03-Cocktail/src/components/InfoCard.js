@@ -38,6 +38,10 @@ export default function InfoCard({ setCocktails}) {
     const data = useLoaderData()
     let cocktail = data.drinks[0];
 
+    const date = new Date(cocktail.dateModified)
+    const timestamp = date.getTime()
+
+
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
     const actualCocktail = allCocktails.drinks.find(drink => drink.idDrink === cocktail.idDrink)
 
@@ -99,7 +103,7 @@ export default function InfoCard({ setCocktails}) {
                     </div>
                 </ComponentsWrapper>
 
-            {cocktail.lastUpdate > cocktail.dateModified ? <h4>there are changes</h4> : <h4>there are no changes</h4>}
+            {cocktail.lastUpdate < timestamp ? <h4>there are changes</h4> : <h4>there are no changes</h4>}
             </CocktailExtraInfo>
         </FullCocktailCard>
 

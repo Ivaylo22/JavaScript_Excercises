@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 
 import { ViewTitle, ViewWrappper } from "../Styled/Views";
-import { fetchAllCocktails } from "../Helpers";
-import { dformat } from "../Helpers";
+import { fetchAllCocktails, getTodayTimestamp } from "../Helpers";
 
 export default function Home({setCocktails}){
+    const todayTime = getTodayTimestamp()
+
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchAllCocktails();
             setCocktails(data);
             data.drinks.map(drink => {
                 drink.isFavourite = false
-                drink.lastUpdate = dformat
+                drink.lastUpdate = todayTime
                 return drink
             })
             localStorage.setItem("cocktails", JSON.stringify(data))
@@ -23,8 +24,7 @@ export default function Home({setCocktails}){
           else {
                 setCocktails(JSON.parse(localStorage.getItem("cocktails")))
           }   
-    }, [setCocktails])
-
+    }, [setCocktails, todayTime])
     return (
         <ViewWrappper>
             <ViewTitle>Welcome to Cocktails catalogue</ViewTitle>

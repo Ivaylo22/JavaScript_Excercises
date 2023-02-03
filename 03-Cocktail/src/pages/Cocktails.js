@@ -4,13 +4,13 @@ import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import {  StyledShowMore, StyledLink } from "../Styled/Navbar";
 
-import { toggleFavourite } from "../Helpers";
-import { fetchAllCocktails } from "../Helpers";
+import { getTodayTimestamp, toggleFavourite, fetchAllCocktails } from "../Helpers";
 
-import { dformat } from "../Helpers";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-export default function Home({cocktails, setCocktails}) { 
+export default function Home({cocktails, setCocktails}) {    
+    const todayTime = getTodayTimestamp()
+
     const [count, setCount] = useState(20);
     const [hasMore, setHasMore] = useState(true);
 
@@ -20,7 +20,7 @@ export default function Home({cocktails, setCocktails}) {
             setCocktails(data);
             data.drinks.map(drink => {
                 drink.isFavourite = false
-                drink.lastUpdate = dformat
+                drink.lastUpdate = todayTime
                 return drink
             })
             localStorage.setItem("cocktails", JSON.stringify(data))
@@ -32,7 +32,7 @@ export default function Home({cocktails, setCocktails}) {
           else {
                 setCocktails(JSON.parse(localStorage.getItem("cocktails")))
           }   
-    }, [setCocktails])
+    }, [setCocktails, todayTime])
 
     function fetchMore() {
         setTimeout(() => {

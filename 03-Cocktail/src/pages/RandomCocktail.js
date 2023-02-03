@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import CocktailCard from "../components/CocktailCard";
-import { fetchAllCocktails, fetchRandomCocktail, isObjEmpty } from "../Helpers";
+import { fetchAllCocktails, fetchRandomCocktail, getTodayTimestamp, isObjEmpty } from "../Helpers";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import { StyledShowMore, StyledLink } from "../Styled/Navbar";
 
 import { toggleFavourite } from "../Helpers";
 
-import { dformat } from "../Helpers";
-
-//cant add a star to toggle favourite because the random cocktail might not be inside all cocktails array
-
 export default function RandomCocktail({cocktails, setCocktails}){
     const [randomCocktail, setRandomCocktail] = useState({})
+
+    const todayTime = getTodayTimestamp()
 
     if(!JSON.parse(localStorage.getItem("cocktails"))){
         const fetchData = async () => {
@@ -21,7 +19,7 @@ export default function RandomCocktail({cocktails, setCocktails}){
             setCocktails(data);
             data.drinks.map(drink => {
                 drink.isFavourite = false
-                drink.lastUpdate = dformat
+                drink.lastUpdate = todayTime
                 return drink
             })
             localStorage.setItem("cocktails", JSON.stringify(data))
