@@ -45,34 +45,32 @@ export default function Home({cocktails, setCocktails}) {
     }
     
 
-    if(!cocktails.drinks){
+    if (!cocktails.drinks) {
         return null;
     }
     return (
         <div>
             <InfiniteScroll
-                dataLength = {count}
-                next = {fetchMore}
-                scrollThreshold = {1}
+                dataLength={count}
+                next={fetchMore}
+                scrollThreshold={1}
                 hasMore={hasMore}
-                loader = {<h4>Loading...</h4>}
+                loader={<h4>Loading...</h4>}
             >
                 {cocktails.drinks.slice(0, count).map(drink => (
-                <CocktailWrapper key={drink.idDrink}>
-                    <CocktailCard
-                        img={drink.strDrinkThumb}
-                        title={drink.strDrink}
-                        id={drink.idDrink}
-                        isFavourite={drink.isFavourite}
-                        handleFavourite={() => toggleFavourite(drink.idDrink, cocktails, setCocktails)}
-                    />
-                    <StyledShowMore variant="contained"><StyledLink to={drink.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
+                    <CocktailWrapper key={drink.idDrink}>
+                        <CocktailCard
+                            img={drink.strDrinkThumb}
+                            title={drink.strDrink}
+                            id={drink.idDrink}
+                            isFavourite={drink.isFavourite}
+                            handleFavourite={() => toggleFavourite(drink.idDrink, cocktails, setCocktails)}
+                        />
+                        <StyledShowMore variant="contained"><StyledLink to={drink.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
 
-                </CocktailWrapper>
+                    </CocktailWrapper>
 
-            ))}
-                
-
+                ))}
             </InfiniteScroll>
         </div>
     )
