@@ -17,27 +17,6 @@ export default function RootLayout({cocktails, setCocktails}) {
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
     const [searchedCocktail, setSearchedCocktail] = useState({});
     const navigate = useNavigate();
-    
-    document.addEventListener("keyup", handleClick)
-
-    function handleClick(e) {
-        e.preventDefault();
-        let value = "";
-        let input = document.getElementById("search-input");
-        if(input){
-            value = input.value;    
-        }
-        if (e.key === "Enter") {          
-            setSearchedCocktail({});            
-            if(!allCocktails ) return null;
-            let searched = allCocktails.drinks.find(drink => drink.strDrink === value)
-
-            if(searched){
-                setSearchedCocktail(searched)
-                navigate('/cocktails')
-            }
-        }
-    }
 
     function toggleFavourite(id){
         let changedCocktails = {
@@ -79,9 +58,18 @@ export default function RootLayout({cocktails, setCocktails}) {
                                                     id="search-input"
                                                     freeSolo
                                                     options={allCocktails.drinks.map((option) => option.strDrink)}
-                                                    renderInput={(params) => <TextField  
-                                                        {...params} 
-                                                        label="Search..." />}
+                                                    onInputChange={(event, value) => {
+                                                        setSearchedCocktail({});
+                                                        let availableOptions = allCocktails.drinks.filter(drink => drink.strDrink.toLowerCase().startsWith(value.toLowerCase()));
+                                                        if (availableOptions.length === 1) {
+                                                            setSearchedCocktail(availableOptions[0]);
+                                                            navigate('/cocktails')
+                                                        }
+                                                    }}
+                                                    renderInput={(params) => <TextField
+                                                        {...params}
+                                                        label="Search..."
+                                                    />}
                                                 />
                                             </Stack> 
                                     }                                   
