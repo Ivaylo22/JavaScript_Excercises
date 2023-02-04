@@ -26,14 +26,12 @@ const InfoRoute = ({ cocktails, setCocktails, loader }) => (
   />
 )
 
-
 function App() {
   const [cocktails, setCocktails] = useState([]);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<RootLayout
-        cocktails={cocktails}
         setCocktails={setCocktails}
       />}>
         <Route index element={<Home
@@ -48,7 +46,7 @@ function App() {
               setCocktails={setCocktails} />}
           />
 
-          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })} 
+          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })}
         </Route>
 
         <Route path="favourites" element={<CocktailsLayout />} errorElement={<CocktailError />}>
@@ -66,7 +64,6 @@ function App() {
           <Route
             index
             element={<RandomCocktail
-              cocktails={cocktails}
               setCocktails={setCocktails} />}
           />
 
@@ -80,8 +77,8 @@ function App() {
 
   return (
     <ContentWrapper>
-        <GlobalStyle />
-        <RouterProvider router={router} />
+      <GlobalStyle />
+      <RouterProvider router={router} />
     </ContentWrapper>
   )
 }

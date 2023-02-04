@@ -6,13 +6,13 @@ import { fetchAllCocktails, setDefaultFavAndUpdate } from "../Helpers";
 export default function Home({setCocktails}){
     useEffect(() => {
         const fetchData = async () => {
-            const data = await fetchAllCocktails();
-            setCocktails(data);
-
+            const data = await fetchAllCocktails();       
+             
             data.drinks.map(drink => {
                 return setDefaultFavAndUpdate(drink)
             })
-            
+
+            setCocktails(data);
             localStorage.setItem("cocktails", JSON.stringify(data))
           };
 

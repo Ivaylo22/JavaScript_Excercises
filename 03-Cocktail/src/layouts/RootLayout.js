@@ -13,7 +13,7 @@ import {  StyledButton, StyledNavbar, StyledStack, StyledShowMore, StyledLink} f
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
 
-export default function RootLayout({cocktails, setCocktails}) {
+export default function RootLayout({setCocktails}) {
     const allCocktails = JSON.parse(localStorage.getItem("cocktails"));
     const [searchedCocktail, setSearchedCocktail] = useState({});
     const navigate = useNavigate();

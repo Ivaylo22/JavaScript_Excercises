@@ -7,7 +7,7 @@ import { StyledShowMore, StyledLink } from "../Styled/Navbar";
 
 import { toggleFavourite } from "../Helpers";
 
-export default function RandomCocktail({cocktails, setCocktails}){
+export default function RandomCocktail({setCocktails}){
     const [randomCocktail, setRandomCocktail] = useState({})
 
     if(!JSON.parse(localStorage.getItem("cocktails"))){
