@@ -33,7 +33,7 @@ export default function Favourites({cocktails, setCocktails}) {
                         isFavourite={drink.isFavourite}
                         handleFavourite={() => toggleFavourite(drink.idDrink, cocktails, setCocktails)}
                     />
-                    <StyledShowMore variant="contained"><StyledLink to={drink.idDrink.toString()}>Show More</StyledLink></StyledShowMore>
+                    <StyledShowMore variant="contained"><StyledLink to={`../${drink.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
 
                 </CocktailWrapper>
 

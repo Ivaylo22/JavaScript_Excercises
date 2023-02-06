@@ -17,14 +17,6 @@ import CocktailError from "./pages/CocktailError";
 
 //layout
 import RootLayout from "./layouts/RootLayout";
-import CocktailsLayout from "./layouts/CocktailsLayout";
-
-const InfoRoute = ({ cocktails, setCocktails, loader }) => (
-  <Route path=":id"
-    element={<InfoCard cocktails={cocktails} setCocktails={setCocktails} />}
-    loader={loader}
-  />
-)
 
 function App() {
   const [cocktails, setCocktails] = useState([]);
@@ -34,41 +26,48 @@ function App() {
       <Route path="/" element={<RootLayout
         setCocktails={setCocktails}
       />}>
-        <Route index element={<Home
-          setCocktails={setCocktails}
-        />} />
+        <Route
+          index
+          element={
+            <Home
+              setCocktails={setCocktails}
+            />} >
+        </Route>
 
-        <Route path="cocktails" element={<CocktailsLayout />} errorElement={<CocktailError />}>
-          <Route
-            index
-            element={<Cocktails
+        <Route
+          path="cocktails"
+          element={
+            <Cocktails
               cocktails={cocktails}
               setCocktails={setCocktails} />}
-          />
-
-          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })}
+          errorElement={<CocktailError />}>
         </Route>
 
-        <Route path="favourites" element={<CocktailsLayout />} errorElement={<CocktailError />}>
-          <Route
-            index
-            element={<Favourites
+        <Route
+          path="favourites"
+          element={
+            <Favourites
               cocktails={cocktails}
               setCocktails={setCocktails} />}
-          />
-
-          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })}
+          errorElement={<CocktailError />}>
         </Route>
 
-        <Route path="random" element={<CocktailsLayout />} errorElement={<CocktailError />}>
-          <Route
-            index
-            element={<RandomCocktail
+        <Route
+          path="random"
+          element={
+            <RandomCocktail
               setCocktails={setCocktails} />}
-          />
-
-          {InfoRoute({ cocktails, setCocktails, loader: cocktailDetailsLoader })}
+          errorElement={<CocktailError />}>
         </Route>
+
+        <Route
+          path=":id"
+          element={
+            <InfoCard
+              cocktails={cocktails}
+              setCocktails={setCocktails} />}
+          loader={cocktailDetailsLoader}
+        />
 
         <Route path="*" element={<NotFound />} />
       </Route>
