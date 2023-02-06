@@ -48,6 +48,7 @@ export function getTodayTimestamp() {
 }
 
 export function setDefaultFavAndUpdate(drink) {
+    console.log("asd")
     const todayTime = getTodayTimestamp()
 
     drink.isFavourite = false

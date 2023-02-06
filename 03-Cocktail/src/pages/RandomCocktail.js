@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect,  useState } from "react";
 
 import CocktailCard from "../components/CocktailCard";
 import { fetchAllCocktails, fetchRandomCocktail, isObjEmpty, setDefaultFavAndUpdate } from "../Helpers";
@@ -9,6 +9,10 @@ import { toggleFavourite } from "../Helpers";
 
 export default function RandomCocktail({setCocktails}){
     const [randomCocktail, setRandomCocktail] = useState({})
+    const memorizedSetDefault = useCallback((drink) => {
+        setDefaultFavAndUpdate(drink)
+    }, [])
+    
 
     if(!JSON.parse(localStorage.getItem("cocktails"))){
         const fetchData = async () => {
@@ -16,7 +20,7 @@ export default function RandomCocktail({setCocktails}){
        
             setCocktails(data);
             data.drinks.map(drink => {
-                return setDefaultFavAndUpdate(drink)
+                return memorizedSetDefault(drink)
             })
             localStorage.setItem("cocktails", JSON.stringify(data))
           };

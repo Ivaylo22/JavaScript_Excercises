@@ -1,23 +1,26 @@
-import React, { useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState} from "react";
 
 import CocktailCard from "../components/CocktailCard";
 import { CocktailWrapper } from "../Styled/Cocktail";
 import {  StyledShowMore, StyledLink } from "../Styled/Navbar";
 
-import {toggleFavourite, fetchAllCocktails, setDefaultFavAndUpdate } from "../Helpers";
+import {toggleFavourite, fetchAllCocktails,  setDefaultFavAndUpdate } from "../Helpers";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home({cocktails, setCocktails}) {    
     const [count, setCount] = useState(20);
     const [hasMore, setHasMore] = useState(true);
+    const memorizedSetDefault = useCallback((drink) => {
+        setDefaultFavAndUpdate(drink)
+    }, [])
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchAllCocktails();
             setCocktails(data);
             data.drinks.map(drink => {
-                return setDefaultFavAndUpdate(drink)
+                return memorizedSetDefault(drink)
             })
             localStorage.setItem("cocktails", JSON.stringify(data))
           };
@@ -28,7 +31,7 @@ export default function Home({cocktails, setCocktails}) {
           else {
                 setCocktails(JSON.parse(localStorage.getItem("cocktails")))
           }   
-    }, [setCocktails])
+    }, [setCocktails, memorizedSetDefault])
 
     function fetchMore() {
         setTimeout(() => {

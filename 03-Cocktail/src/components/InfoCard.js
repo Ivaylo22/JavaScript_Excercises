@@ -2,7 +2,7 @@ import React from "react"
 
 import { useLoaderData } from "react-router-dom";
 
-import { toggleFavourite } from "../Helpers";
+import { fetchCocktailById, toggleFavourite } from "../Helpers";
 
 import { CocktailExtraInfo, 
     CocktailHeader, 
@@ -19,7 +19,6 @@ import { CocktailExtraInfo,
 
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import StarIcon from '@mui/icons-material/Star';
-import { fetchCocktailById } from "../Helpers";
 
 // data loader
 export const cocktailDetailsLoader = async ({ params }) => {
