@@ -13,7 +13,10 @@ export default function RandomCocktail({setCocktails}){
         setDefaultFavAndUpdate(drink)
     }, [])
     
-
+    const memorizedToggleFavourite = useCallback((id, cocktails, setCocktails) => {
+        toggleFavourite(id, cocktails, setCocktails)
+    }, [])
+    
     if(!JSON.parse(localStorage.getItem("cocktails"))){
         const fetchData = async () => {
             const data = await fetchAllCocktails();
@@ -69,7 +72,7 @@ export default function RandomCocktail({setCocktails}){
                     title={randomCocktail.strDrink}
                     id={randomCocktail.idDrink}
                     isFavourite={randomCocktail.isFavourite}
-                    handleFavourite={() => toggleFavourite(randomCocktail.idDrink, allCocktails, setCocktails)}
+                    handleFavourite={() => memorizedToggleFavourite(randomCocktail.idDrink, allCocktails, setCocktails)}
                 />
                 <StyledShowMore variant="contained"><StyledLink to={`../${randomCocktail.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
             </CocktailWrapper>

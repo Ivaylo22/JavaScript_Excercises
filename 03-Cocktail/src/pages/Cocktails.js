@@ -11,8 +11,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 export default function Home({cocktails, setCocktails}) {    
     const [count, setCount] = useState(20);
     const [hasMore, setHasMore] = useState(true);
+
     const memorizedSetDefault = useCallback((drink) => {
         setDefaultFavAndUpdate(drink)
+    }, [])
+
+    const memorizedToggleFavourite = useCallback((id, cocktails, setCocktails) => {
+        toggleFavourite(id, cocktails, setCocktails)
     }, [])
 
     useEffect(() => {
@@ -63,7 +68,7 @@ export default function Home({cocktails, setCocktails}) {
                             title={drink.strDrink}
                             id={drink.idDrink}
                             isFavourite={drink.isFavourite}
-                            handleFavourite={() => toggleFavourite(drink.idDrink, cocktails, setCocktails)}
+                            handleFavourite={() => memorizedToggleFavourite(drink.idDrink, cocktails, setCocktails)}
                         />
                         <StyledShowMore variant="contained"><StyledLink to={`../${drink.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
 
