@@ -90,7 +90,7 @@ export default function RootLayout({setCocktails}) {
                                 isFavourite={searchedCocktail.isFavourite}
                                 handleFavourite={() => toggleFavourite(searchedCocktail.idDrink)}
                             />
-                            <StyledShowMore variant="contained"><StyledLink reloadDocument={true} to={`../${searchedCocktail.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
+                            <StyledShowMore variant="contained"><StyledLink reloadDocument={true} to={`../cocktails/${searchedCocktail.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
                         </CocktailWrapper> :
                         <Outlet />
                 }

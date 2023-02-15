@@ -61,7 +61,7 @@ function App() {
         </Route>
 
         <Route
-          path=":id"
+          path="cocktails/:id"
           element={
             <InfoCard
               cocktails={cocktails}

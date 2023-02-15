@@ -70,7 +70,7 @@ export default function Home({cocktails, setCocktails}) {
                             isFavourite={drink.isFavourite}
                             handleFavourite={() => memorizedToggleFavourite(drink.idDrink, cocktails, setCocktails)}
                         />
-                        <StyledShowMore variant="contained"><StyledLink to={`../${drink.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
+                        <StyledShowMore variant="contained"><StyledLink to={`${drink.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
 
                     </CocktailWrapper>
 

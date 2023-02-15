@@ -74,7 +74,7 @@ export default function RandomCocktail({setCocktails}){
                     isFavourite={randomCocktail.isFavourite}
                     handleFavourite={() => memorizedToggleFavourite(randomCocktail.idDrink, allCocktails, setCocktails)}
                 />
-                <StyledShowMore variant="contained"><StyledLink to={`../${randomCocktail.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
+                <StyledShowMore variant="contained"><StyledLink to={`../cocktails/${randomCocktail.idDrink.toString()}`}>Show More</StyledLink></StyledShowMore>
             </CocktailWrapper>
         </div>
     )
